@@ -32,5 +32,5 @@ public interface ICaixaEletronico {
 	* @retorna uma string formatada informando o resultado da operacao
 	*/
 	public String armazenaCotaMinima(Integer minimo);
-	}
 }
+
