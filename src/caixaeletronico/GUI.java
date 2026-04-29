@@ -1,20 +1,32 @@
 package caixaeletronico;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
-
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	// Cores Originais
+	private Color azulPrimario = new Color(41, 128, 185);
+	private Color azulEscuro = new Color(44, 62, 80);
+	private Color fundoCinza = new Color(236, 240, 241);
+	private Color vermelhoSair = new Color(192, 57, 43);
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -28,21 +40,126 @@ public class GUI extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public GUI() {
+		setTitle("Sistema de Caixa Eletrônico");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 400, 650);
+		
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(153, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTextPane txtpnCu = new JTextPane();
-		txtpnCu.setText("CU");
-		txtpnCu.setBounds(82, 66, 120, 20);
-		contentPane.add(txtpnCu);
+		// --- Módulo Cliente ---
+		JLabel lblCliente = new JLabel("MÓDULO DO CLIENTE");
+		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCliente.setForeground(azulEscuro);
+		lblCliente.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblCliente.setBounds(10, 30, 364, 25);
+		contentPane.add(lblCliente);
+		
+		JButton btnSaque = new JButton("Efetuar Saque");
+		estilizarBotao(btnSaque, azulEscuro);
+		btnSaque.setBounds(75, 70, 230, 40);
+		contentPane.add(btnSaque);
+		
+		// --- Módulo Administrador ---
+		JLabel lblAdmin = new JLabel("MÓDULO ADMINISTRATIVO");
+		lblAdmin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAdmin.setForeground(azulEscuro);
+		lblAdmin.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblAdmin.setBounds(10, 160, 364, 25);
+		contentPane.add(lblAdmin);
+		
+		JButton btnRelatorio = new JButton("Relatório de Cédulas");
+		estilizarBotao(btnRelatorio, azulEscuro);
+		btnRelatorio.setBounds(75, 200, 230, 35);
+		contentPane.add(btnRelatorio);
+		
+		JButton btnValorTotal = new JButton("Valor Total Disponível");
+		estilizarBotao(btnValorTotal, azulEscuro);
+		btnValorTotal.setBounds(75, 245, 230, 35);
+		contentPane.add(btnValorTotal);
+		
+		JButton btnReposicao = new JButton("Reposição de Cédulas");
+		estilizarBotao(btnReposicao, azulEscuro);
+		btnReposicao.setBounds(75, 290, 230, 35);
+		contentPane.add(btnReposicao);
+		
+		JButton btnCota = new JButton("Cota Mínima");
+		estilizarBotao(btnCota, azulEscuro);
+		btnCota.setBounds(75, 335, 230, 35);
+		contentPane.add(btnCota);
+		
+		// --- Geral ---
+		JButton btnSair = new JButton("SAIR DO SISTEMA");
+		btnSair.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		btnSair.setBackground(new Color(255, 0, 0)); // Fundo Vermelho
+		btnSair.setForeground(Color.WHITE);          // Texto Branco
 
+		// --- AS LINHAS QUE RESOLVEM O BUG ---
+		btnSair.setFocusPainted(false);      // Remove aquele retângulo em volta do texto
+		btnSair.setContentAreaFilled(false); // Impede o Windows de pintar o fundo azul ao clicar
+		btnSair.setOpaque(true);             // Garante que o SEU vermelho apareça no lugar
+		// ------------------------------------
+
+		btnSair.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		        // Agora o vermelho vai ficar "travado"
+		        btnSair.setBackground(new Color(255, 0, 0));
+		        btnSair.setForeground(Color.WHITE);
+		    }
+
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		        btnSair.setBackground(new Color(255, 0, 0));
+		        btnSair.setForeground(Color.WHITE);
+		    }
+		});
+
+		btnSair.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        System.exit(0);
+		    }
+		});
+
+		btnSair.setBounds(75, 455, 230, 40);
+		contentPane.add(btnSair);}
+
+	/**
+	 * Método de estilização com efeito de clique personalizado
+	 */
+	private void estilizarBotao(JButton botao, Color corOriginal) {
+		botao.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		botao.setForeground(Color.WHITE);
+		botao.setBackground(corOriginal);
+		botao.setBorder(new LineBorder(corOriginal.darker(), 1));
+		botao.setFocusPainted(false);
+		botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		botao.setOpaque(true);
+		botao.setContentAreaFilled(true);
+
+		// Cores do Clique
+		Color azulClaroClique = new Color(200, 230, 255);
+		Color azulEscuroTexto = new Color(44, 62, 80);
+
+		botao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// Efeito ao clicar (segurar)
+				botao.setBackground(azulClaroClique);
+				botao.setForeground(azulEscuroTexto);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// Volta ao normal ao soltar
+				botao.setBackground(corOriginal);
+				botao.setForeground(Color.WHITE);
+			}
+		});
 	}
 }
