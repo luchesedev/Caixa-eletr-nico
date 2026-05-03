@@ -1,5 +1,16 @@
 package caixaeletronico;
 public class CaixaEletronico  implements ICaixaEletronico {
+	private int valor;
+    private int[][] notas = new int[][] {
+        {100, 100},
+        {50, 200},
+        {20, 300},
+        {10, 350},
+        {5, 450},
+        {2, 500}
+    };
+    private int cotaMinima = 20;
+    
 public String pegaRelatorioCedulas() {
 	String resposta = "";
 	//logica de fazer o relatorio de cedulas
