@@ -12,16 +12,17 @@ public class CaixaEletronico  implements ICaixaEletronico {
     private int cotaMinima = 20;
     
     public String pegaRelatorioCedulas() {
-	String resposta = "";
-	//logica de fazer o relatorio de cedulas]
-	resposta = notas[0][1] != 0 ? resposta+="Notas de 100: " + notas[0][1]+"\n" :resposta+"";
-	resposta = notas[1][1] != 0 ? resposta+="Notas de 50: " + notas[1][1]+"\n" :resposta+"";
-	resposta = notas[2][1] != 0 ? resposta+="Notas de 20: " + notas[2][1]+"\n" :resposta+"";
-	resposta = notas[3][1] != 0 ? resposta+="Notas de 10: " + notas[3][1]+"\n" :resposta+"";
-	resposta = notas[4][1] != 0 ? resposta+="Notas de 5: " + notas[4][1]+"\n" :resposta+"";
-	resposta = notas[5][1] != 0 ? resposta+="Notas de 2: " + notas[5][1]+"\n" :resposta+"";
-	
-	return resposta;
+    	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
+        //logica de fazer o relatorio de cedulas
+    	resposta = notas[0][1] != 0 ? resposta+="Notas de 100: "+notas[0][1]+" notas \n" :resposta+"";
+        resposta = notas[1][1] != 0 ? resposta+="Notas de 50: "+notas[1][1]+" notas \n" :resposta+"";
+        resposta = notas[2][1] != 0 ? resposta+="Notas de 20: "+notas[2][1]+" notas \n" :resposta+"";
+        resposta = notas[3][1] != 0 ? resposta+="Notas de 10: "+notas[3][1]+" notas \n" :resposta+"";
+        resposta = notas[4][1] != 0 ? resposta+="Notas de 5: "+notas[4][1]+" notas \n" :resposta+"";
+        resposta = notas[5][1] != 0 ? resposta+="Notas de 2: "+notas[5][1]+" notas \n" :resposta+"";
+
+        resposta+= "\n"+("-").repeat(88);
+        return resposta;
 	}
 	public String pegaValorTotalDisponivel() {
 	String resposta = "";
@@ -71,9 +72,7 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	    // monta resposta
 	    String resposta = "Saque realizado com sucesso:\n";
 
-	    for (int i = 0; i < notas.length; i++) {
-	        resposta += notas[i][0] + ": " + usadas[i] + "\n";
-	    }
+
 
 	    return resposta;
 	

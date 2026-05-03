@@ -65,6 +65,13 @@ public class GUI extends JFrame {
 		contentPane.add(lblCliente);
 		
 		JButton btnSaque = new JButton("Efetuar Saque");
+		btnSaque.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String resultado = caixa.sacar(Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Digite o valor:")));
+				JOptionPane.showMessageDialog(null,resultado);
+			}
+		});
 		estilizarBotao(btnSaque, azulEscuro);
 		btnSaque.setBounds(75, 70, 230, 40);
 		contentPane.add(btnSaque);
