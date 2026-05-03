@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -20,6 +21,7 @@ public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private CaixaEletronico caixa; 
 	
 	// Cores Originais
 	private Color azulPrimario = new Color(41, 128, 185);
@@ -33,6 +35,7 @@ public class GUI extends JFrame {
 				try {
 					GUI frame = new GUI();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,6 +44,7 @@ public class GUI extends JFrame {
 	}
 
 	public GUI() {
+		 this.caixa = new CaixaEletronico();
 		setTitle("Sistema de Caixa Eletrônico");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,11 +78,22 @@ public class GUI extends JFrame {
 		contentPane.add(lblAdmin);
 		
 		JButton btnRelatorio = new JButton("Relatório de Cédulas");
+		btnRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,caixa.pegaRelatorioCedulas());
+                
+			}
+		});
 		estilizarBotao(btnRelatorio, azulEscuro);
 		btnRelatorio.setBounds(75, 200, 230, 35);
 		contentPane.add(btnRelatorio);
 		
 		JButton btnValorTotal = new JButton("Valor Total Disponível");
+		btnValorTotal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			}
+		});
 		estilizarBotao(btnValorTotal, azulEscuro);
 		btnValorTotal.setBounds(75, 245, 230, 35);
 		contentPane.add(btnValorTotal);

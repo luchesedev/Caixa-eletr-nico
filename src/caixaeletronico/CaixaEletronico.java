@@ -13,7 +13,14 @@ public class CaixaEletronico  implements ICaixaEletronico {
     
 public String pegaRelatorioCedulas() {
 	String resposta = "";
-	//logica de fazer o relatorio de cedulas
+	//logica de fazer o relatorio de cedulas]
+	resposta = notas[0][1] != 0 ? resposta+="Notas de 100:"+notas[0][1]+"\n" :resposta+"";
+	resposta = notas[1][1] != 0 ? resposta+="Notas de 50:"+notas[1][1]+"\n" :resposta+"";
+	resposta = notas[2][1] != 0 ? resposta+="Notas de 20:"+notas[2][1]+"\n" :resposta+"";
+	resposta = notas[3][1] != 0 ? resposta+="Notas de 10:"+notas[3][1]+"\n" :resposta+"";
+	resposta = notas[4][1] != 0 ? resposta+="Notas de 5:"+notas[4][1]+"\n" :resposta+"";
+	resposta = notas[5][1] != 0 ? resposta+="Notas de 2:"+notas[5][1]+"\n" :resposta+"";
+	
 	return resposta;
 	}
 	public String pegaValorTotalDisponivel() {
