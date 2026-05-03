@@ -12,30 +12,22 @@ public class CaixaEletronico  implements ICaixaEletronico {
     private int cotaMinima = 20;
     
     public String pegaRelatorioCedulas() {
-<<<<<<< Updated upstream
     	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
         //logica de fazer o relatorio de cedulas
     	resposta = notas[0][1] != 0 ? resposta+="Notas de 100: "+notas[0][1]+" notas \n" :resposta+"";
-=======
-        String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
-        //logica de fazer o relatorio de cedulas
-        resposta = notas[0][1] != 0 ? resposta+="Notas de 100: "+notas[0][1]+" notas \n" :resposta+"";
->>>>>>> Stashed changes
+
         resposta = notas[1][1] != 0 ? resposta+="Notas de 50: "+notas[1][1]+" notas \n" :resposta+"";
         resposta = notas[2][1] != 0 ? resposta+="Notas de 20: "+notas[2][1]+" notas \n" :resposta+"";
         resposta = notas[3][1] != 0 ? resposta+="Notas de 10: "+notas[3][1]+" notas \n" :resposta+"";
         resposta = notas[4][1] != 0 ? resposta+="Notas de 5: "+notas[4][1]+" notas \n" :resposta+"";
         resposta = notas[5][1] != 0 ? resposta+="Notas de 2: "+notas[5][1]+" notas \n" :resposta+"";
 
-<<<<<<< Updated upstream
-        resposta+= "\n"+("-").repeat(88);
-        return resposta;
-	}
-=======
+
+
         resposta+= "\n"+("-").repeat(90);
         return resposta;
     }
->>>>>>> Stashed changes
+
 	public String pegaValorTotalDisponivel() {
 	String resposta = "";
 	//logica de pega o valor total disponivel no caixa eletronio
