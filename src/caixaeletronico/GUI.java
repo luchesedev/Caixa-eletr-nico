@@ -98,7 +98,7 @@ public class GUI extends JFrame {
 		JButton btnValorTotal = new JButton("Valor Total Disponível");
 		btnValorTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				JOptionPane.showMessageDialog(null,caixa.pegaValorTotalDisponivel());
 			}
 		});
 		estilizarBotao(btnValorTotal, azulEscuro);

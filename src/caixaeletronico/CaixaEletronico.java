@@ -27,7 +27,15 @@ public class CaixaEletronico  implements ICaixaEletronico {
 
 	public String pegaValorTotalDisponivel() {
 	String resposta = "";
-	//logica de pega o valor total disponivel no caixa eletronio
+	//atributo que vai armazenar a soma total do valor
+		double total = 0;
+		
+	//for para percorrer o array
+		for (int i = 0; i < notas.length; i++) {
+	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
+			total += notas[i][0] * notas [i][1];
+		}
+		resposta = "Valor total disponível no caixa: R$ " + String.format("%.2f", total);
 	return resposta;
 	}
 	public String reposicaoCedulas(Integer cedula, Integer quantidade) {
