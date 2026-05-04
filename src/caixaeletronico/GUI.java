@@ -157,6 +157,11 @@ public class GUI extends JFrame {
 		contentPane.add(btnReposicao);
 		
 		JButton btnCota = new JButton("Cota Mínima");
+		btnCota.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, caixa.armazenaCotaMinima(20));
+				}
+		});
 		estilizarBotao(btnCota, azulEscuro);
 		btnCota.setBounds(75, 335, 230, 35);
 		contentPane.add(btnCota);

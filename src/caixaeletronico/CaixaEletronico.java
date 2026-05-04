@@ -9,7 +9,6 @@ public class CaixaEletronico  implements ICaixaEletronico {
         {5, 450},
         {2, 500}
     };
-    private int cotaMinima = 20;
     
     public String pegaRelatorioCedulas() {
     	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
@@ -118,9 +117,28 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	}
 	
 	public String armazenaCotaMinima(Integer minimo) {
-	String resposta = "";
-	//logica de armazenar a cota minima para saque e criar um //mensagem(resposta)ao usuario
-	return resposta;
+
+		//logica de armazenar a cota minima para saque e criar um //mensagem(resposta)ao usuario
+		boolean caixaVazio;
+		double total = 0;
+		
+	//for para percorrer o array
+		for (int i = 0; i < notas.length; i++) {
+	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
+			total += notas[i][0] * notas [i][1];
+		}
+
+		if(total < minimo){
+			caixaVazio = true;
+			String resposta = "Caixa Vazio: Chame o Operador";
+			return resposta;
+		}
+		else{
+			caixaVazio = false;
+			String resposta = "Cota Minima de R$: "+ minimo + "\nCaixa OK";
+			return resposta;
+		}
+
 	}
 	
 	/**
