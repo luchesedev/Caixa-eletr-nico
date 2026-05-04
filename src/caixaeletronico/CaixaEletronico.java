@@ -59,15 +59,16 @@ public class CaixaEletronico  implements ICaixaEletronico {
 
 	        // percorre todas as notas
 	        for (int i = 0; i < notas.length; i++) {
-
+	        	
 	            int valorNota = notas[i][0];
 	            int qtdDisponivel = notas[i][1];
 	            int qtdNecessaria = restante / valorNota;
 	            int qtdUsada = Math.min(qtdNecessaria, qtdDisponivel);
-	            usadas[i] = qtdUsada;
+	            
 	            if(i == 4 && (restante == 8 || restante == 6) ) {
 	            	continue;
 	            }
+	            usadas[i] = qtdUsada;
 	            restante -= qtdUsada * valorNota;
 	            
 	        }
