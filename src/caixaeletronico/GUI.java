@@ -158,10 +158,24 @@ public class GUI extends JFrame {
 		
 		JButton btnCota = new JButton("Cota Mínima");
 		btnCota.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, caixa.armazenaCotaMinima(20));
+    	public void actionPerformed(ActionEvent e) {
+        	int valor = 0;
+        	boolean isWrong = true;
+        	while (isWrong) {
+            	try {
+                	String entrada = JOptionPane.showInputDialog(null, "Digite a cota mínima para atendimento:");
+                	if (entrada == null) { JOptionPane.showMessageDialog(null, "Operação cancelada"); break; }
+
+                	valor = Integer.parseInt(entrada);
+                	isWrong = false;
 				}
-		});
+           		catch (NumberFormatException ex) {
+                	JOptionPane.showMessageDialog(null, "Erro: digite apenas números inteiros!");
+            	}
+        	}
+        if (!isWrong) JOptionPane.showMessageDialog(null, caixa.armazenaCotaMinima(valor));
+    }
+});
 		estilizarBotao(btnCota, azulEscuro);
 		btnCota.setBounds(75, 335, 230, 35);
 		contentPane.add(btnCota);

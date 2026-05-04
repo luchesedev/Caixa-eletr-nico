@@ -1,6 +1,7 @@
 package caixaeletronico;
 public class CaixaEletronico  implements ICaixaEletronico {
 	private int valor;
+	private int cotaMinima = 0;
     private int[][] notas = new int[][] {
         {100, 100},
         {50, 200},
@@ -27,16 +28,19 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	public String pegaValorTotalDisponivel() {
 	String resposta = "";
 	//atributo que vai armazenar a soma total do valor
-		double total = 0;
+		int total = 0;
 		
 	//for para percorrer o array
 		for (int i = 0; i < notas.length; i++) {
 	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
 			total += notas[i][0] * notas [i][1];
 		}
-		resposta = "Valor total disponível no caixa: R$ " + String.format("%.2f", total);
+		resposta = "Valor total disponível no caixa: R$ " + total + ",00";
 	return resposta;
 	}
+
+
+
 	public String reposicaoCedulas(Integer cedula, Integer quantidade) {
 		
 		String resposta = "";
@@ -71,9 +75,8 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	
 	public String sacar(Integer valor) {
 		
-		 int totalvalorUsado = 0;
-
-	        if (valor <= 0) {
+		if(cotaMinima <= valor){
+			if (valor <= 0) {
 	            return "Valor inválido";
 	        }
 
@@ -108,23 +111,33 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	        for (int i = 0; i < notas.length; i++) {
 	            notas[i][1] -= usadas[i];
 	        }
+			 String resposta = "Saque realizado com sucesso:\n";
 
-	        
-	        // monta resposta
-	        String resposta = "Saque realizado com sucesso\n";
-	        return resposta;
+        	for (int i = 0; i < notas.length; i++) {
+            	resposta += notas[i][0] + ": " + usadas[i] + " nota(s)\n";
+        	}
+
+        	return resposta;
+
+		}
+
+		String resposta = "Caixa Vazio: Chame o Operador";
+		return resposta;
+
 	
+	 
 	}
 	
 	public String armazenaCotaMinima(Integer minimo) {
 
 		//logica de armazenar a cota minima para saque e criar um //mensagem(resposta)ao usuario
+		this.cotaMinima = minimo;
 		boolean caixaVazio;
-		double total = 0;
+		int total = 0;
 		
-	//for para percorrer o array
+		//for para percorrer o array
 		for (int i = 0; i < notas.length; i++) {
-	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
+		//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
 			total += notas[i][0] * notas [i][1];
 		}
 
