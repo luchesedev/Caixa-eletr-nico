@@ -39,9 +39,33 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	return resposta;
 	}
 	public String reposicaoCedulas(Integer cedula, Integer quantidade) {
-	String resposta = "";
-	//logica de fazer a reposicao de cedulas e criar uma mensagem //(resposta)ao usuario
-	return resposta;
+		
+		String resposta = "";
+		        
+		        if (cedula == null || quantidade == null) {
+		        	resposta = "Erro: Cédula e quantidade não podem ser nulos.";
+		            return resposta;
+		        }
+		        
+		        if (quantidade <= 0) {
+		        	resposta = "Erro: A quantidade para reposição deve ser maior que zero.";
+		            return resposta;
+		        }
+
+		  
+		        for (int i = 0; i < notas.length; i++) {
+		            
+		            if (notas[i][0] == cedula) {
+		               
+		                notas[i][1] += quantidade;
+		                
+		                	resposta = "Sucesso! Foram adicionadas "+quantidade+" cédulas de R$"+cedula+",00";
+		               return resposta;
+		            }
+		        }
+		        		resposta = "Erro: Cédula de R$ "+cedula+",00 inválida. O caixa só aceita notas de 100, 50, 20, 10, 5 e 2."; 
+		      return  resposta;
+		    
 	}
 	
 	
@@ -59,12 +83,16 @@ public class CaixaEletronico  implements ICaixaEletronico {
 
 	        // percorre todas as notas
 	        for (int i = 0; i < notas.length; i++) {
-	        	
+	        	//calcula o valor da nota, consulta a quantidade disponivel para calcular a quantidade que será usada 
 	            int valorNota = notas[i][0];
 	            int qtdDisponivel = notas[i][1];
 	            int qtdNecessaria = restante / valorNota;
 	            int qtdUsada = Math.min(qtdNecessaria, qtdDisponivel);
 	            
+	            //para casos com o resto 3 não é possível  
+	            while(qtdUsada>0 && restante-(qtdUsada*valorNota)==3) {
+	            	qtdUsada--;
+	            }
 	            if(i == 4 && (restante == 8 || restante == 6) ) {
 	            	continue;
 	            }

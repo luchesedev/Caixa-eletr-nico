@@ -67,9 +67,13 @@ public class GUI extends JFrame {
 		JButton btnSaque = new JButton("Efetuar Saque");
 		btnSaque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				String resultado = caixa.sacar(Integer.parseInt(JOptionPane.showInputDialog(null,
                         "Digite o valor:")));
 				JOptionPane.showMessageDialog(null,resultado);
+				}catch(Exception e1) {
+					JOptionPane.showMessageDialog(null,"operação cancelada");
+				}
 			}
 		});
 		estilizarBotao(btnSaque, azulEscuro);
@@ -106,6 +110,48 @@ public class GUI extends JFrame {
 		contentPane.add(btnValorTotal);
 		
 		JButton btnReposicao = new JButton("Reposição de Cédulas");
+		btnReposicao.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+
+		        int valor1 = 0, valor2 = 0;
+		        boolean isWrong = true;
+
+		        while (isWrong) {
+		            try {
+		                String entrada1 = JOptionPane.showInputDialog(null, "Digite a cédula que deseja inserir:");
+
+		                // CANCELAR ou FECHAR
+		                if (entrada1 == null) {
+		                    JOptionPane.showMessageDialog(null, "Operação cancelada");
+		                    break;
+		                }
+
+		                String entrada2 = JOptionPane.showInputDialog(null, "Digite a quantidade de cédulas que ira repor:");
+
+		                // CANCELAR ou FECHAR
+		                if (entrada2 == null) {
+		                    JOptionPane.showMessageDialog(null, "Operação cancelada");
+		                    break;
+		                }
+
+		                valor1 = Integer.parseInt(entrada1);
+		                valor2 = Integer.parseInt(entrada2);
+
+		                isWrong = false;
+
+		            } catch (NumberFormatException ex) {
+		                JOptionPane.showMessageDialog(null,
+		                        "Erro: digite apenas números inteiros!");
+		            }
+		        }
+
+		        // só executa se não cancelou
+		        if (isWrong == false) {
+		            String resultado = caixa.reposicaoCedulas(valor1, valor2);
+		            JOptionPane.showMessageDialog(null, resultado);
+		        }
+		    }
+		});
 		estilizarBotao(btnReposicao, azulEscuro);
 		btnReposicao.setBounds(75, 290, 230, 35);
 		contentPane.add(btnReposicao);
