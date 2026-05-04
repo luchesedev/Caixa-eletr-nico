@@ -14,12 +14,12 @@ public class CaixaEletronico  implements ICaixaEletronico {
     public String pegaRelatorioCedulas() {
     	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
         //logica de fazer o relatorio de cedulas
-    	resposta = notas[0][1] != 0 ? resposta+="Notas de 100: "+notas[0][1]+" notas \n" :resposta+"";
-        resposta = notas[1][1] != 0 ? resposta+="Notas de 50: "+notas[1][1]+" notas \n" :resposta+"";
-        resposta = notas[2][1] != 0 ? resposta+="Notas de 20: "+notas[2][1]+" notas \n" :resposta+"";
-        resposta = notas[3][1] != 0 ? resposta+="Notas de 10: "+notas[3][1]+" notas \n" :resposta+"";
-        resposta = notas[4][1] != 0 ? resposta+="Notas de 5: "+notas[4][1]+" notas \n" :resposta+"";
-        resposta = notas[5][1] != 0 ? resposta+="Notas de 2: "+notas[5][1]+" notas \n" :resposta+"";
+    	resposta = notas[0][1] != 0 ? resposta+="Notas de R$100,00: "+notas[0][1]+" notas \n" :resposta+"";
+        resposta = notas[1][1] != 0 ? resposta+="Notas de R$50,00: "+notas[1][1]+" notas \n" :resposta+"";
+        resposta = notas[2][1] != 0 ? resposta+="Notas de R$20,00: "+notas[2][1]+" notas \n" :resposta+"";
+        resposta = notas[3][1] != 0 ? resposta+="Notas de R$10,00: "+notas[3][1]+" notas \n" :resposta+"";
+        resposta = notas[4][1] != 0 ? resposta+="Notas de R$5,00: "+notas[4][1]+" notas \n" :resposta+"";
+        resposta = notas[5][1] != 0 ? resposta+="Notas de R$2,00: "+notas[5][1]+" notas \n" :resposta+"";
 
         resposta+= "\n"+("-").repeat(90);
         return resposta;
