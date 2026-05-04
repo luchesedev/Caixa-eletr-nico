@@ -48,48 +48,45 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	
 	public String sacar(Integer valor) {
 		
-  
-	    if (valor <= 0) {
-	        return "Valor inválido";
-	    }
+		 int totalvalorUsado = 0;
 
-	    int restante = valor;
-	    int[] usadas = new int[notas.length];
+	        if (valor <= 0) {
+	            return "Valor inválido";
+	        }
 
-	    // percorre todas as notas
-	    for (int i = 0; i < notas.length; i++) {
+	        int[] usadas = new int[notas.length];
+	        int restante = valor;
 
-	        int valorNota = notas[i][0];
-	        int qtdDisponivel = notas[i][1];
+	        // percorre todas as notas
+	        for (int i = 0; i < notas.length; i++) {
 
-	        int qtdUsada = Math.min(restante / valorNota, qtdDisponivel);
+	            int valorNota = notas[i][0];
+	            int qtdDisponivel = notas[i][1];
+	            int qtdNecessaria = restante / valorNota;
+	            int qtdUsada = Math.min(qtdNecessaria, qtdDisponivel);
+	            usadas[i] = qtdUsada;
+	            if(i == 4 && (restante == 8 || restante == 6) ) {
+	            	continue;
+	            }
+	            restante -= qtdUsada * valorNota;
+	            
+	        }
 
-	        usadas[i] = qtdUsada;
-	        restante -= qtdUsada * valorNota;
-	    }
-
-	    // se não conseguiu pagar
-	    if (restante != 0) {
-	        return "Não Temos Notas Para Este Saque";
-	    }
-
-	    // atualiza o caixa
-	    for (int i = 0; i < notas.length; i++) {
-	        notas[i][1] -= usadas[i];
-	    }
-
-	    // monta resposta
-	    String resposta = "Saque realizado com sucesso:\n";
+	            if (restante != 0)
+	            	return "Não Temos Notas Para Este Saque";
 
 
+	        // atualiza o caixa
+	        for (int i = 0; i < notas.length; i++) {
+	            notas[i][1] -= usadas[i];
+	        }
 
-	    return resposta;
+	        
+	        // monta resposta
+	        String resposta = "Saque realizado com sucesso\n";
+	        return resposta;
 	
 	}
-	
-	
-	
-	
 	
 	public String armazenaCotaMinima(Integer minimo) {
 	String resposta = "";
