@@ -1,6 +1,7 @@
 package caixaeletronico;
 public class CaixaEletronico  implements ICaixaEletronico {
 	private int valor;
+	private int cotaMinima = 0;
     private int[][] notas = new int[][] {
         {100, 100},
         {50, 200},
@@ -9,6 +10,17 @@ public class CaixaEletronico  implements ICaixaEletronico {
         {5, 450},
         {2, 500}
     };
+   private int[] historicoCedulas = new int[6];
+    int somatotal=0;
+    String msg="";
+    
+   
+    
+    
+   
+    
+    
+    
     
     public String pegaRelatorioCedulas() {
     	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
@@ -19,24 +31,36 @@ public class CaixaEletronico  implements ICaixaEletronico {
         resposta = notas[3][1] != 0 ? resposta+="Notas de R$10,00: "+notas[3][1]+" notas \n" :resposta+"";
         resposta = notas[4][1] != 0 ? resposta+="Notas de R$5,00: "+notas[4][1]+" notas \n" :resposta+"";
         resposta = notas[5][1] != 0 ? resposta+="Notas de R$2,00: "+notas[5][1]+" notas \n" :resposta+"";
-
-        resposta+= "\n"+("-").repeat(90);
+        resposta+=("-").repeat(90);
         return resposta;
     }
+    
+    
+    
+    
 
 	public String pegaValorTotalDisponivel() {
 	String resposta = "";
+	int total=0;
 	//atributo que vai armazenar a soma total do valor
-		double total = 0;
+		
 		
 	//for para percorrer o array
 		for (int i = 0; i < notas.length; i++) {
 	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
 			total += notas[i][0] * notas [i][1];
+			
+			
 		}
-		resposta = "Valor total disponível no caixa: R$ " + String.format("%.2f", total);
+		resposta = "Valor total disponível no caixa: R$ " + total;
 	return resposta;
 	}
+	
+	
+	
+	
+	
+	
 	public String reposicaoCedulas(Integer cedula, Integer quantidade) {
 		
 		String resposta = "";
@@ -50,8 +74,6 @@ public class CaixaEletronico  implements ICaixaEletronico {
 		        	resposta = "Erro: A quantidade para reposição deve ser maior que zero.";
 		            return resposta;
 		        }
-
-		  
 		        for (int i = 0; i < notas.length; i++) {
 		            
 		            if (notas[i][0] == cedula) {
@@ -69,13 +91,40 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	
 	
 	
+	
+	
+	
+	
 	public String sacar(Integer valor) {
 		
-		 int totalvalorUsado = 0;
-
+		 int valorNota;
+         int qtdDisponivel; 
+         int qtdNecessaria; 
+         int qtdUsada;
+         int total=0;
+     
+     		for (int i = 0; i < notas.length; i++) {
+     	
+     			total += notas[i][0] * notas [i][1];	
+     		}
+         
+	
+         if(cotaMinima <total){
 	        if (valor <= 0) {
 	            return "Valor inválido";
 	        }
+	        
+	        
+	        if (valor > 3000) {
+	            return "Saque não permitido, valor máximo atingido";
+	        }
+	        
+	        int totalAtual = 0;
+	        for (int i = 0; i < notas.length; i++) {
+	            totalAtual += notas[i][0] * notas[i][1];
+	        }
+
+	      
 
 	        int[] usadas = new int[notas.length];
 	        int restante = valor;
@@ -83,25 +132,54 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	        // percorre todas as notas
 	        for (int i = 0; i < notas.length; i++) {
 	        	//calcula o valor da nota, consulta a quantidade disponivel para calcular a quantidade que será usada 
-	            int valorNota = notas[i][0];
-	            int qtdDisponivel = notas[i][1];
-	            int qtdNecessaria = restante / valorNota;
-	            int qtdUsada = Math.min(qtdNecessaria, qtdDisponivel);
+	             valorNota = notas[i][0];
+	             qtdDisponivel = notas[i][1];
+	            qtdNecessaria = restante / valorNota;
+	             qtdUsada = Math.min(qtdNecessaria, qtdDisponivel);
 	            
 	            //para casos com o resto 3 não é possível  
 	            while(qtdUsada>0 && restante-(qtdUsada*valorNota)==3) {
 	            	qtdUsada--;
 	            }
+	            
 	            if(i == 4 && (restante == 8 || restante == 6) ) {
 	            	continue;
 	            }
 	            usadas[i] = qtdUsada;
 	            restante -= qtdUsada * valorNota;
 	            
+	            
+	           
+	            if(valor>3000)
+		 	       {
+		 	    	   return "Saque não permitido, valor máximo atingido";
+	            	
+		 	       }
+	            
+	            if(usadas[i]>30)
+	            {
+	            	return "Saque não permitido,excedeu o número de cédulas";
+	            	
+	            }
+	            
 	        }
-
+	      
+	        
+	        
 	            if (restante != 0)
 	            	return "Não Temos Notas Para Este Saque";
+	            
+	            for (int i = 0; i < notas.length; i++) {
+		                    
+		            historicoCedulas[i] += usadas[i];  
+		        }
+	            
+	            
+	           somatotal+=valor;
+	           
+	           
+	           
+	          
 
 
 	        // atualiza o caixa
@@ -112,19 +190,65 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	        
 	        // monta resposta
 	        String resposta = "Saque realizado com sucesso\n";
-	        return resposta;
+	        
+	        
+	        
+	        
+	        for (int i = 0; i < notas.length; i++) {
+	            resposta += notas[i][0] + ": " + usadas[i] + " nota(s)\n";
+	           
+	        }
+	        
+	        msg = "====== EXTRATO ======\n";
+	        msg+="Valor inicial: R$ 37250";
+	        msg+="\nValor final: R$"+(37250-somatotal);
+			msg += "\nValor total sacado: R$ " + somatotal + ",00\n";
+			msg += "-----------------------------------";
+
+			
+			for (int i = 0; i < notas.length; i++) {
+				
+				if (historicoCedulas[i] > 0) {
+					msg += "\n" + notas[i][0] + ",00: " + historicoCedulas[i] + " nota(s)";
+				}
+			}
+	        
+	       return resposta;
+	      
 	
 	}
+         	String resposta = "Caixa Vazio: Chame o Operador";
+	        return resposta;
+         
+         
 	
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	public String armazenaCotaMinima(Integer minimo) {
 
 		//logica de armazenar a cota minima para saque e criar um //mensagem(resposta)ao usuario
+		this.cotaMinima = minimo;
 		boolean caixaVazio;
-		double total = 0;
+		int total = 0;
 		
-	//for para percorrer o array
+		//for para percorrer o array
 		for (int i = 0; i < notas.length; i++) {
-	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
+		//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
 			total += notas[i][0] * notas [i][1];
 		}
 
@@ -140,6 +264,12 @@ public class CaixaEletronico  implements ICaixaEletronico {
 		}
 
 	}
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * @wbp.parser.entryPoint
