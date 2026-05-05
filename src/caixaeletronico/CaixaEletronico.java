@@ -111,7 +111,9 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	        if (valor <= 0) {
 	            return "Valor inválido";
 	        }
-	        
+	        if(valor<cotaMinima) {
+	        	return "saque a partir da cota mínima estabelecida de "+cotaMinima;
+	        }
 	        
 	      //Não é possível sacar mais que 3000
             if(valor>3000)
