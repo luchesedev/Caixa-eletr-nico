@@ -64,6 +64,8 @@ public class GUI extends JFrame {
 		lblCliente.setBounds(10, 30, 364, 25);
 		contentPane.add(lblCliente);
 		
+		
+		//btn Saque
 		JButton btnSaque = new JButton("Efetuar Saque");
 		btnSaque.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,6 +101,7 @@ public class GUI extends JFrame {
 		btnRelatorio.setBounds(75, 200, 230, 35);
 		contentPane.add(btnRelatorio);
 		
+		//btn Valor total
 		JButton btnValorTotal = new JButton("Valor Total Disponível");
 		btnValorTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,13 +112,14 @@ public class GUI extends JFrame {
 		btnValorTotal.setBounds(75, 245, 230, 35);
 		contentPane.add(btnValorTotal);
 		
+		//btn Reposição
 		JButton btnReposicao = new JButton("Reposição de Cédulas");
 		btnReposicao.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 
 		        int valor1 = 0, valor2 = 0;
 		        boolean isWrong = true;
-
+		    	//loop para caso entre com valores errados
 		        while (isWrong) {
 		            try {
 		                String entrada1 = JOptionPane.showInputDialog(null, "Digite a cédula que deseja inserir:");
@@ -156,11 +160,14 @@ public class GUI extends JFrame {
 		btnReposicao.setBounds(75, 290, 230, 35);
 		contentPane.add(btnReposicao);
 		
+		//btn Cota
 		JButton btnCota = new JButton("Cota Mínima");
 		btnCota.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e) {
         	int valor = 0;
         	boolean isWrong = true;
+        	
+        	//loop para caso entre com valores errados
         	while (isWrong) {
             	try {
                 	String entrada = JOptionPane.showInputDialog(null, "Digite a cota mínima para atendimento:");
@@ -186,12 +193,12 @@ public class GUI extends JFrame {
 		btnSair.setBackground(new Color(255, 0, 0)); // Fundo Vermelho
 		btnSair.setForeground(Color.WHITE);          // Texto Branco
 
-		// --- AS LINHAS QUE RESOLVEM O BUG ---
+		
 		btnSair.setFocusPainted(false);      // Remove aquele retângulo em volta do texto
 		btnSair.setContentAreaFilled(false); // Impede o Windows de pintar o fundo azul ao clicar
 		btnSair.setOpaque(true);             // Garante que o SEU vermelho apareça no lugar
-		// ------------------------------------
-
+		
+		//metodos para quando você segura e solta o click
 		btnSair.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mousePressed(MouseEvent e) {
@@ -206,7 +213,7 @@ public class GUI extends JFrame {
 		        btnSair.setForeground(Color.WHITE);
 		    }
 		});
-
+		//onclick do btn sair
 		btnSair.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	

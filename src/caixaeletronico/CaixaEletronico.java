@@ -17,14 +17,11 @@ public class CaixaEletronico  implements ICaixaEletronico {
    
     
     
-   
-    
-    
     
     
     public String pegaRelatorioCedulas() {
     	String resposta = ("-").repeat(30)+"Relatório de células"+("-").repeat(30)+"\n";
-        //logica de fazer o relatorio de cedulas
+        //Concatenando a string resposta com operador ternario para concatenar apenas as notas presentes em caixa 
     	resposta = notas[0][1] != 0 ? resposta+="Notas de R$100,00: "+notas[0][1]+" notas \n" :resposta+"";
         resposta = notas[1][1] != 0 ? resposta+="Notas de R$50,00: "+notas[1][1]+" notas \n" :resposta+"";
         resposta = notas[2][1] != 0 ? resposta+="Notas de R$20,00: "+notas[2][1]+" notas \n" :resposta+"";
@@ -50,7 +47,6 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	//incrementa a multiplicação da quantidade de notas pelo valor no atributo "total"
 			total += notas[i][0] * notas [i][1];
 			
-			
 		}
 		resposta = "Valor total disponível no caixa: R$ " + total;
 	return resposta;
@@ -64,16 +60,17 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	public String reposicaoCedulas(Integer cedula, Integer quantidade) {
 		
 		String resposta = "";
-		        
+		        //possível erro de nulo
 		        if (cedula == null || quantidade == null) {
 		        	resposta = "Erro: Cédula e quantidade não podem ser nulos.";
 		            return resposta;
 		        }
-		        
+		      //possível erro de input de um valor negativo
 		        if (quantidade <= 0) {
 		        	resposta = "Erro: A quantidade para reposição deve ser maior que zero.";
 		            return resposta;
 		        }
+		        //Enfim adicionando as notas
 		        for (int i = 0; i < notas.length; i++) {
 		            
 		            if (notas[i][0] == cedula) {
@@ -83,7 +80,7 @@ public class CaixaEletronico  implements ICaixaEletronico {
 		                	resposta = "Sucesso! Foram adicionadas "+quantidade+" cédulas de R$"+cedula+",00";
 		               return resposta;
 		            }
-		        }
+		        }//caso digitem uma cedula invalida
 		        		resposta = "Erro: Cédula de R$ "+cedula+",00 inválida. O caixa só aceita notas de 100, 50, 20, 10, 5 e 2."; 
 		      return  resposta;
 		    
@@ -102,22 +99,26 @@ public class CaixaEletronico  implements ICaixaEletronico {
          int qtdNecessaria; 
          int qtdUsada;
          int total=0;
+         int quantidadeGeral=0;
      
      		for (int i = 0; i < notas.length; i++) {
      	
      			total += notas[i][0] * notas [i][1];	
      		}
          
-	
+     	//Condição para rodar o sistema apenas se não estiver em cota minima
          if(cotaMinima <total){
 	        if (valor <= 0) {
 	            return "Valor inválido";
 	        }
 	        
 	        
-	        if (valor > 3000) {
-	            return "Saque não permitido, valor máximo atingido";
-	        }
+	      //Não é possível sacar mais que 3000
+            if(valor>3000)
+	 	       {
+	 	    	   return "Saque não permitido, valor máximo atingido";
+            	
+	 	       }
 	        
 	        int totalAtual = 0;
 	        for (int i = 0; i < notas.length; i++) {
@@ -141,22 +142,18 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	            while(qtdUsada>0 && restante-(qtdUsada*valorNota)==3) {
 	            	qtdUsada--;
 	            }
-	            
+	            //para casos que a ultima casa decimal é o 8 e 6 
 	            if(i == 4 && (restante == 8 || restante == 6) ) {
 	            	continue;
 	            }
 	            usadas[i] = qtdUsada;
+	            quantidadeGeral += usadas[i];
 	            restante -= qtdUsada * valorNota;
 	            
 	            
 	           
-	            if(valor>3000)
-		 	       {
-		 	    	   return "Saque não permitido, valor máximo atingido";
-	            	
-		 	       }
-	            
-	            if(usadas[i]>30)
+	          //Não é possível caso exceda mais de 30 cedulas 
+	            if(quantidadeGeral>30)
 	            {
 	            	return "Saque não permitido,excedeu o número de cédulas";
 	            	
@@ -165,7 +162,7 @@ public class CaixaEletronico  implements ICaixaEletronico {
 	        }
 	      
 	        
-	        
+	        //Saque impossiveis como 1 e 3 por exemplo ou a quantidade necessárias de notas
 	            if (restante != 0)
 	            	return "Não Temos Notas Para Este Saque";
 	            
